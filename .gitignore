@@ -1,6 +1,9 @@
-#https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
-
+.DS_Store
+Data/data.json
 .idea
+
+
+#https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
