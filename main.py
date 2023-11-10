@@ -1,4 +1,4 @@
-import AssetManager as am
+from AssetManager import AssetManager as am
 
 def main():
   print(f'CU Quants Trading Emporium')
