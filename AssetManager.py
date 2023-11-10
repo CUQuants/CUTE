@@ -40,7 +40,7 @@ class AssetManager:
             self.data[ticker] = self.empty_ticker_history()
 
         if self.data[ticker]['curr_qty'] + quantity < 0:
-            raise Exception("Can't sell more stocks than in possesion")
+            return self.create_code(400, ("Can't sell more stocks than in possesion"))
 
         # calucluate curr_avg_price using a weighted moving average
         self.data[ticker]['curr_avg_price'] = (self.data[ticker]['curr_avg_price'] * self.data[ticker][
@@ -56,6 +56,7 @@ class AssetManager:
         self.data[ticker]['history'].append(trade)
 
         self.write_data()
+        self.balence += quantity*price
 
     def buy(self, ticker, quantity):
         price = self.get_price(ticker)
@@ -65,24 +66,15 @@ class AssetManager:
 
         self.modify_holdings(ticker, quantity, price)
 
-
         return self.create_code(200)
 
 
-    def sell(quantity: float, ticker: str, holdings: float, balance: float):
-        yf_ticker = yf.Ticker(ticker)
-        data = yf_ticker.history()
-        last_quote = data['Close'].iloc[-1]
-        #print(ticker, last_quote)
+    def sell(self, quantity: float, ticker: str, balance: float):
+        price = self.get_price(ticker)
+
+        self.modify_holdings(ticker, -quantity, price)
     
-        new_holdings = holdings - quantity
-    
-        if (new_holdings < 0):
-            return holdings, balance
-        
-        balance += quantity * last_quote
-    
-        return new_holdings, balance
+        return self.create_code(200)
     
         # print(f"Old holdings and balance: {(holdings, balance)}")
         
