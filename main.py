@@ -1,8 +1,7 @@
+import AssetManager as am
+
 def main():
-  while True:
-    cmd = input("Command: ")
-    if "BUY" in cmd.upper():
-      print("buy")
+  print(f'CU Quants Trading Emporium')
 
 if __name__ == "__main__":
     __main__()
