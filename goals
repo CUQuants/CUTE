@@ -1,4 +1,5 @@
-Version 1:
+Version 1.0.0:
+ETA: Dec 13th, 2023.
 
 Goals:
 - Be able to Buy and Sell:
@@ -6,3 +7,5 @@ Goals:
 
 - Be able to look at Accounting
   - Look at trade history, %/$ PnL for positions, Portfolio PnL (%,$)
+
+- Be able to do all of the above via user input
