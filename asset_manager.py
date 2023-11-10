@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import yfinance as yf
 
 class AssetManager():
     def __int__(self, balance, data_file = 'Data/data.json'):
@@ -48,8 +49,7 @@ class AssetManager():
 
         self.write_data()
 
-    def sell(self, quantity, str, holdings, balance):
-        #def sell(quantity: float, ticker: str, holdings: float, balance: float):
+    def sell(self, quantity: float, ticker: str, holdings: float, balance: float):
         yf_ticker = yf.Ticker(ticker)
         data = yf_ticker.history()
         last_quote = data['Close'].iloc[-1]
