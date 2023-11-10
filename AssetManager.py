@@ -1,9 +1,10 @@
 import os
 import json
 import time
+import yfinance as yf
 
-class AssetManager():
-    def __int__(self, balance, data_file = 'Data/data.json'):
+class AssetManager:
+    def __init__(self, balance, data_file = 'Data/data.json'):
         self.balance = balance
         self.data_file = 'Data/data.json'
         self.data = {}
@@ -13,7 +14,11 @@ class AssetManager():
         else:
             print("Data file not found, creating")
             self.write_data()
-
+    def create_code(self, res, message=''):
+        return {
+            'res': res,
+            'message': message
+        }
     def empty_ticker_history(self):
         return {
             'curr_qty': 0,
@@ -25,22 +30,26 @@ class AssetManager():
         with open(self.data_file, "w") as write_file:
             json.dump(self.data, write_file)
 
-    def buy(self, ticker, quantity):
+    def get_price(self, ticker):
+        selected = yf.Ticker(ticker)
+        finfo = selected.fast_info
+        return finfo.last_price
+
+    def modify_holdings(self, ticker, quantity, price):
         if ticker not in self.data:
             self.data[ticker] = self.empty_ticker_history()
 
-        selected = yf.Ticker(ticker)
-        finfo = selected.fast_info
-        new_price = finfo.last_price
+        if self.data[ticker]['curr_qty'] + quantity < 0:
+            raise Exception("Can't sell more stocks than in possesion")
 
         # calucluate curr_avg_price using a weighted moving average
         self.data[ticker]['curr_avg_price'] = (self.data[ticker]['curr_avg_price'] * self.data[ticker][
-            'curr_qty'] + quantity * new_price) / (self.data[ticker]['curr_qty'] + quantity)
+            'curr_qty'] + quantity * price) / (self.data[ticker]['curr_qty'] + quantity)
         self.data[ticker]['curr_qty'] += quantity
 
         trade = {
             'size': quantity,
-            'price': new_price,
+            'price': price,
             'timestampt': time.time()
         }
 
@@ -48,5 +57,17 @@ class AssetManager():
 
         self.write_data()
 
+    def buy(self, ticker, quantity):
+        price = self.get_price(ticker)
+
+        if(self.balance < price*quantity):
+            raise Exception('Not enough funds')
+
+        self.modify_holdings(ticker, quantity, price)
+
+
+        return self.create_code(200)
+
     def sell(self):
         #TODO
+        pass
