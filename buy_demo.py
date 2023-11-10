@@ -13,6 +13,7 @@ def empty_ticker_history():
     }
 
 
+
 data_file = 'Data/data.json'
 data = {}
 
