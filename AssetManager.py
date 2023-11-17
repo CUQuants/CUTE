@@ -30,7 +30,7 @@ class AssetManager:
         with open(self.data_file, "w") as write_file:
             json.dump(self.data, write_file)
 
-    def get_price(self, ticker):
+    def get_price(self, ticker) -> float:
         selected = yf.Ticker(ticker)
         finfo = selected.fast_info
         return finfo.last_price
@@ -43,9 +43,11 @@ class AssetManager:
             raise Exception("Can't sell more stocks than in possesion")
 
         # calucluate curr_avg_price using a weighted moving average
-        self.data[ticker]['curr_avg_price'] = (self.data[ticker]['curr_avg_price'] * self.data[ticker][
-            'curr_qty'] + quantity * price) / (self.data[ticker]['curr_qty'] + quantity)
+        # self.data[ticker]['curr_avg_price'] = (self.data[ticker]['curr_avg_price'] * self.data[ticker][
+        #     'curr_qty'] + quantity * price) / (self.data[ticker]['curr_qty'] + quantity)
         self.data[ticker]['curr_qty'] += quantity
+
+        self.balance -= quantity*price
 
         trade = {
             'size': quantity,
@@ -69,21 +71,16 @@ class AssetManager:
         return self.create_code(200)
 
 
-    def sell(quantity: float, ticker: str, holdings: float, balance: float):
-        yf_ticker = yf.Ticker(ticker)
-        data = yf_ticker.history()
-        last_quote = data['Close'].iloc[-1]
-        #print(ticker, last_quote)
-    
-        new_holdings = holdings - quantity
-    
-        if (new_holdings < 0):
-            return holdings, balance
+    def sell(self, ticker: str, quantity: float):
+
+        price = self.get_price(ticker)
         
-        balance += quantity * last_quote
+        if(ticker not in self.data or self.data[ticker]['curr_qty'] < quantity):
+            raise Exception('Not enough holdings')
+
+
+        self.modify_holdings(ticker, -quantity, price)
+
+
+        return self.create_code(200)
     
-        return new_holdings, balance
-    
-        # print(f"Old holdings and balance: {(holdings, balance)}")
-        
-        # print(f"New holdings and balance: {sell(2, 'GOOG', holdings, balance)}")
