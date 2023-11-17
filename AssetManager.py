@@ -50,9 +50,9 @@ class AssetManager:
         self.balance -= quantity*price
 
         trade = {
-            'size': quantity,
+            'qty': quantity,
             'price': price,
-            'timestampt': time.time()
+            'timestamp': time.time()
         }
 
         self.data[ticker]['history'].append(trade)
