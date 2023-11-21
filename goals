@@ -1,9 +1,9 @@
 Version 1.0.0:
-ETA: Dec 13th, 2023.
+ETA: Dec 9th, 2023.
 
 Goals:
-- Be able to Buy and Sell:
-  1. Does Accounting for balance, positions, and trade history
+- Be able to Buy and Sell: [DONE]
+  1. Does Accounting for balance, positions, and trade history [DONE]
 
 - Be able to look at Accounting
   - Look at trade history, %/$ PnL for positions, Portfolio PnL (%,$)
