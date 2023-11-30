@@ -1,5 +1,5 @@
 from AssetManager import AssetManager
-from Analytics import Analytics
+from Metric import Metric
 
 def main():
   print(f'CU Quants Trading Emporium')
