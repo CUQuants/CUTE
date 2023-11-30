@@ -28,7 +28,7 @@ CUTE boasts an intuitive and user-friendly interface, making it accessible to bo
 Clone the CUTE repository and install the required dependencies using the provided requirements.txt file.
 `bash
 Copy code
-git clone https://github.com/your-username/CUTE.git
+git clone https://github.com/CUQuants/CUTE.git
 cd CUTE
 pip install -r requirements.txt`
 #### 2.Configuration:
