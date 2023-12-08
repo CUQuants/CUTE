@@ -6,10 +6,15 @@ import yfinance as yf
 class AssetManager:
     def __init__(self, data_file = 'Data/data.json'):
         self.data_file = 'Data/data.json'
-        self.data = {}
+        self.data = {
+            'balance': 2000,
+            'stocks': {}
+        }
 
         if os.path.exists(data_file):
             self.data = json.load(open(data_file))
+            if ('balance' not in self.data ):
+                raise Exception("No balance attribute in data file, please fix before continuing, or delete data file and rerun program.")
             self.balance = self.data['balance']
         else:
             self.write_data()
