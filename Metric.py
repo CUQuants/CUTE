@@ -4,3 +4,6 @@ class Metric:
 
   def get_pnl(self, intil_price, curr_price):
     return curr_price/initl_price
+
+
+manager.data['Balance']
