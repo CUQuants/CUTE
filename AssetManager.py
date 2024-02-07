@@ -1,11 +1,20 @@
 import os
 import json
 import time
+from typing import Dict, List, Any
+
 import yfinance as yf
 
+
+class Response:
+    def __init__(self, res: int, message: str = ""):
+        self.res: int = res
+        self.message: str = message
+        
+
 class AssetManager:
-    def __init__(self, data_file = 'Data/data.json'):
-        self.data_file = 'Data/data.json'
+    def __init__(self, data_file = 'data.json'):
+        self.data_file = data_file
         self.data = {}
 
         if os.path.exists(data_file):
@@ -16,19 +25,14 @@ class AssetManager:
             self.balance = 2000
             print("Data file not found, creating new data.json with balance ", self.balance)
 
-    def create_code(self, res, message=''):
-        return {
-            'res': res,
-            'message': message
-        }
-    def empty_ticker_history(self):
+    def empty_ticker_history(self)-> dict[str, int | list[Any]]:
         return {
             'curr_qty': 0,
             'curr_avg_price': 0,
             'history': []
         }
 
-    def write_data(self):
+    def write_data(self)->None:
         with open(self.data_file, "w") as write_file:
             json.dump(self.data, write_file)
 
@@ -37,7 +41,7 @@ class AssetManager:
         finfo = selected.fast_info
         return finfo.last_price
 
-    def modify_holdings(self, ticker, quantity, price):
+    def modify_holdings(self, ticker, quantity, price)->Response:
         if ticker not in self.data['stocks']:
             self.data["stocks"][ticker] = self.empty_ticker_history()
 
@@ -60,8 +64,9 @@ class AssetManager:
         self.data["stocks"][ticker]['history'].append(trade)
 
         self.write_data()
+        return Response(200)
 
-    def buy(self, ticker, quantity):
+    def buy(self, ticker, quantity)->Response:
         price = self.get_price(ticker)
 
         if(self.balance < price*quantity):
@@ -70,10 +75,10 @@ class AssetManager:
         self.modify_holdings(ticker, quantity, price)
 
 
-        return self.create_code(200)
+        return Response(200)
 
 
-    def sell(self, ticker: str, quantity: float):
+    def sell(self, ticker: str, quantity: float)->Response:
 
         price = self.get_price(ticker)
         
@@ -84,10 +89,10 @@ class AssetManager:
         self.modify_holdings(ticker, -quantity, price)
 
 
-        return self.create_code(200)
+        return Response(200)
 
 
-    def printPortfolio(self):
+    def printPortfolio(self)->None:
         sum = 0
 
         for t in self.data["stocks"]:
@@ -101,5 +106,5 @@ class AssetManager:
         print("Current Balance: $" + str(self.data['balance']))
 
 
-    def printBalance(self):
+    def printBalance(self)->None:
         print("Your current balance is $" + str(self.data['balance']))
