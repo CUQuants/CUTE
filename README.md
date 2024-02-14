@@ -6,7 +6,7 @@ Portfolio Manager For Algo Trading
 
 ## Creating a Strategy
 ```python
-Class STRATEGY_NAME
+class STRATEGY_NAME:
     def step(manager: AssetManager):
         #...
         # reponse is a json with the the structure json = {
