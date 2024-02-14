@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 class PriceTracker:
-    def __init__(self, period = '1y', interval = '1h', simulated_time = "2023-05-14 12:30:00-05:00"):
+    def __init__(self, period = '2y', interval = '1h', simulated_time = "2023-05-14 12:30:00-05:00"):
         self.period = period
         self.interval = interval
         self.simulated_time = simulated_time
@@ -25,4 +25,4 @@ class PriceTracker:
 
 if __name__ == "__main__":
     a = PriceTracker()
-    a.get_price_history("BLK")
+    print(a.get_price_history("BLK"))
