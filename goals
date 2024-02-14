@@ -1,8 +1,0 @@
-Version 1:
-
-Goals:
-- Be able to Buy and Sell:
-  1. Does Accounting for balance, positions, and trade history
-
-- Be able to look at Accounting
-  - Look at trade history, %/$ PnL for positions, Portfolio PnL (%,$)

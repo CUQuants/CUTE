@@ -7,7 +7,6 @@ def main() -> None:
         if "BUY" == cmd.upper():
             ticker = input("Ticker: ").upper()
             qty = int(input("Quantity: "))
-
             res = manager.buy(ticker, qty)
             if res.res == 200:
                  manager.printBalance()

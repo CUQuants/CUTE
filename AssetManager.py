@@ -10,7 +10,7 @@ class Response:
     def __init__(self, res: int, message: str = ""):
         self.res: int = res
         self.message: str = message
-        
+
 
 class AssetManager:
     def __init__(self, data_file = 'data.json'):
@@ -81,7 +81,7 @@ class AssetManager:
     def sell(self, ticker: str, quantity: float)->Response:
 
         price = self.get_price(ticker)
-        
+
         if(ticker not in self.data['stocks'] or self.data["stocks"][ticker]['curr_qty'] < quantity):
             raise Exception('Not enough holdings of', ticker, ". You have", self.data["stocks"][ticker]['curr_qty'])
 
