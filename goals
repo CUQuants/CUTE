@@ -13,3 +13,5 @@ Goals:
 - Back testing on intra-day yFinance data for stocks and etf.
   - Create convention for "strategy script"
   - Be able to run back test from GUI
+
+- Clean up directory/files and add docs 
