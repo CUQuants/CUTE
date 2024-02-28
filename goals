@@ -8,4 +8,8 @@ Goals:
 - Be able to look at Accounting
   - Look at trade history, %/$ PnL for positions, Portfolio PnL (%,$)
 
-- Be able to do all of the above via user input
+- A clean looking GUI
+
+- Back testing on intra-day yFinance data for stocks and etf.
+  - Create convention for "strategy script"
+  - Be able to run back test from GUI
