@@ -1,13 +1,9 @@
 package main
 
+var secrets *Secrets
+
 func main() {
-	secrets, err := loadSecrets("keys.json")
-	if err != nil {
-		panic("Couldn't load secrets")
-	}
+	secrets, _ = loadSecrets("keys.json")
 
-	println(secrets.TwelvedataApiKey)
-
-	println("Hello world!")
-
+	fetchData("AAPL")
 }
