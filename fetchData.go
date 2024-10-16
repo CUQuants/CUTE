@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
+	"net/url"
+	"time"
 )
 
 type MetaData struct {
@@ -27,34 +28,45 @@ type StockValue struct {
 	Volume   string `json:"volume"`
 }
 
-type StockData struct {
+type TwelveDataResponse struct {
 	Meta   MetaData     `json:"meta"`
 	Values []StockValue `json:"values"`
 }
 
-func fetchData(ticker string) {
-	url := "https://api.twelvedata.com/time_series?symbol=" + ticker + ",EUR/USD,ETH/BTC:Huobi,TRP:TSX&interval=1min&apikey=" + secrets.TwelvedataApiKey
-	println(url)
-	resp, err := http.Get(url)
+func fetchStockData(symbol string, interval string, n int, endTime int64) (*TwelveDataResponse, error) {
+	endTimeISO := time.Unix(endTime, 0).UTC().Format(time.RFC3339)
 
+	baseURL := "https://api.twelvedata.com/time_series"
+	params := url.Values{}
+	params.Add("symbol", symbol)
+	params.Add("interval", interval)
+	params.Add("apikey", secrets.TwelvedataApiKey)
+	params.Add("outputsize", fmt.Sprintf("%d", n))
+	params.Add("end_date", endTimeISO)
+
+	requestURL := fmt.Sprintf("%s?%s", baseURL, params.Encode())
+
+	resp, err := http.Get(requestURL)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, fmt.Errorf("failed to make request: %v", err)
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("API response status: %d", resp.StatusCode)
 	}
 
 	defer resp.Body.Close()
-	body, err := io.ReadAll(io.Reader(resp.Body)) // response body is []byte
 
-	var result map[string]StockData
-
-	// Unmarshal the JSON into the map
-	err = json.Unmarshal(body, &result)
+	body, err := io.ReadAll(io.Reader(resp.Body))
 	if err != nil {
-		fmt.Println("Error unmarshalling JSON:", err)
-		return
+		return nil, fmt.Errorf("failed to read response: %v", err)
 	}
 
-	for key, value := range result {
-		fmt.Printf("Key: %s, Value: %+v\n", key, value)
+	var data TwelveDataResponse
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %v", err)
 	}
 
+	return &data, nil
 }
