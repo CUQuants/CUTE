@@ -1,9 +1,8 @@
 package main
 
 import (
-	"time"
-
-	"golang.org/x/exp/rand"
+	"fmt"
+	"net/http"
 )
 
 var secrets *Secrets
@@ -14,7 +13,6 @@ var balance float32 = 0
 var portfolio map[string]int = make(map[string]int)
 
 func main() {
-
 	currentTimeUnix = 1673560800
 
 	var err error
@@ -22,28 +20,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// testData, err := fetchStockData("AAPL", "1min", 5, 1673560800)
-	// if err != nil {
-	// 	println(err.Error())
-	// 	return
-	// }
-	// println(testData.Meta.Symbol)
-	// fmt.Println("len", len(testData.Values))
-	// println(testData.Values[len(testData.Values)-1].High)
-	// println(testData.Values[0].Datetime)
-	// println(testData.Values[0].Close)
 
-	// _ = buyStock("AAPL", 1)
+	http.HandleFunc("/buy", buyHandler)
+	http.HandleFunc("/sell", sellHandler)
+	http.HandleFunc("/step", stepHandler)
 
-	for i := 0; i < 60; i++ {
-		action := rand.Intn(3)
-		if action == 0 {
-			_ = buyStock("AAPL", 1)
-		} else if action == 1 {
-			_ = sellStock("AAPL", 1)
-		}
-		//do nothing on action == 3
-		stepLoop()
-		time.Sleep(16 * time.Second)
+	fmt.Println("Server starting on port 8080...")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Println("Error starting server:", err)
 	}
 }
