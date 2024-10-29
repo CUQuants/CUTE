@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	updatechecker "github.com/Christian1984/go-update-checker"
 )
 
 var secrets *Secrets
@@ -13,6 +15,10 @@ var balance float32 = 0
 var portfolio map[string]int = make(map[string]int)
 
 func main() {
+	uc := updatechecker.New("CUQuants", "CUTE", "CUTE", "", 0, true)
+	uc.CheckForUpdate("0.0.1")
+	uc.PrintMessage()
+
 	currentTimeUnix = 1673560800
 
 	var err error
