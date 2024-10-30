@@ -1,3 +1,5 @@
 keys.json
 CUTE
 latestcheck.json
+python/venv
+__pycache__
