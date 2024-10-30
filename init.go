@@ -7,8 +7,8 @@ import (
 
 type InitConfig struct {
 	ClientVersion       string `json:"clientVersion"`
-	CurrentTimeUnix     int    `json:"currentTimeUnix"`
-	StepIntervalSeconds int    `json:"stepIntervalSeconds"`
+	CurrentTimeUnix     int64  `json:"currentTimeUnix"`
+	StepIntervalSeconds int64  `json:"stepIntervalSeconds"`
 }
 
 func initHandler(w http.ResponseWriter, r *http.Request) {

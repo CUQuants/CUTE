@@ -1,7 +1,7 @@
 import requests
 
 class CUTE:
-    def __init__(self, url: str = 'localhost:3000', step_interval_seconds: int = 60*5, start_time_unix: int = 1673560800):
+    def __init__(self, url: str = 'http://localhost:3000', step_interval_seconds: int = 60*5, start_time_unix: int = 1673560800):
         assert step_interval_seconds >= 60
         self.version = '0.0.1'
         self.url = url
@@ -15,7 +15,6 @@ class CUTE:
         response = requests.post(self.url + '/init', json=data)
         if response.status_code != 200:
             print(response.text)
-        return response
 
     def buy(self, symbol: str, quantity: int):
         assert quantity > 0

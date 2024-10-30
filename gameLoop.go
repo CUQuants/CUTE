@@ -13,7 +13,6 @@ func stepLoop() {
 	humanReadable := t.Format("2006-01-02 15:04:05 MST")
 	println()
 
-	fmt.Println("###################")
 	fmt.Println("Time:", humanReadable)
 	fmt.Println("Balance:", balance)
 	fmt.Println("Portfolio:")
@@ -27,6 +26,7 @@ func stepLoop() {
 	if portfolioEmpty {
 		fmt.Println("   None")
 	}
+	fmt.Println("###################")
 
 }
 

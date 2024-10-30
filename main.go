@@ -9,8 +9,8 @@ import (
 
 var secrets *Secrets
 
-var currentTimeUnix int
-var stepIntervalSeconds int = 60 * 5
+var currentTimeUnix int64
+var stepIntervalSeconds int64 = 60 * 5
 var balance float32 = 0
 var portfolio map[string]int = make(map[string]int)
 
@@ -34,8 +34,8 @@ func main() {
 	http.HandleFunc("/sell", sellHandler)
 	http.HandleFunc("/step", stepHandler)
 
-	fmt.Println("Server starting on port 8080...")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	fmt.Println("Server starting on port 3000...")
+	if err := http.ListenAndServe(":3000", nil); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 }
