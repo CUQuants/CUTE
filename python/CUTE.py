@@ -7,7 +7,15 @@ class CUTE:
         self.url = url
         self.step_interval_seconds = step_interval_seconds
         self.start_time_unix = start_time_unix
-
+        data = {
+            "clientVersion": self.version,
+            "currentTimeUnix": start_time_unix,
+            "stepIntervalSeconds": step_interval_seconds
+        }
+        response = requests.post(self.url + '/init', json=data)
+        if response.status_code != 200:
+            print(response.text)
+        return response
 
     def buy(self, symbol: str, quantity: int):
         assert quantity > 0

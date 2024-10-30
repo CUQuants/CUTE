@@ -9,8 +9,8 @@ import (
 
 var secrets *Secrets
 
-var currentTimeUnix int64
-var stepIntervalSeconds int64 = 60 * 5
+var currentTimeUnix int
+var stepIntervalSeconds int = 60 * 5
 var balance float32 = 0
 var portfolio map[string]int = make(map[string]int)
 
@@ -29,6 +29,7 @@ func main() {
 		panic(err)
 	}
 
+	http.HandleFunc("/init", initHandler)
 	http.HandleFunc("/buy", buyHandler)
 	http.HandleFunc("/sell", sellHandler)
 	http.HandleFunc("/step", stepHandler)
