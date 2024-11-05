@@ -43,3 +43,24 @@ class CUTE:
         if response.status_code != 200:
             print(response.text)
         return response
+
+
+    def fetch_stock_data(self, symbol:str, interval:str, n: int):
+        assert n > 0
+        print('Warning: fetch_stock_data is not fully implemented')
+        data = {
+            "symbol": symbol,
+            "interval": interval,
+            "n":'n'
+        }
+        response = requests.post(self.url + '/fetch-stock-data', json=data)
+        if response.status_code != 200:
+            print(response.text)
+        return response
+
+    def get_portfolio(self):
+        print('Warning: get-portfolio is not fully implemented')
+        response = requests.post(self.url + '/get-portfolio', json={}})
+        if response.status_code != 200:
+            print(response.text)
+        return response
