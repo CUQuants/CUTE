@@ -12,9 +12,14 @@ class CUTE:
             "currentTimeUnix": start_time_unix,
             "stepIntervalSeconds": step_interval_seconds
         }
-        response = requests.post(self.url + '/init', json=data)
-        if response.status_code != 200:
-            print(response.text)
+        try:
+            response = requests.post(self.url + '/init', json=data)
+            if response.status_code != 200:
+                print(response.text)
+        except Exception as e:
+            print(e)
+            print('Make sure CUTE is running!')
+            quit()
 
     def buy(self, symbol: str, quantity: int):
         assert quantity > 0
@@ -60,7 +65,7 @@ class CUTE:
 
     def get_portfolio(self):
         print('Warning: get-portfolio is not fully implemented')
-        response = requests.post(self.url + '/get-portfolio', json={}})
+        response = requests.post(self.url + '/get-portfolio', json={})
         if response.status_code != 200:
             print(response.text)
         return response
