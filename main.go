@@ -34,6 +34,9 @@ func main() {
 	http.HandleFunc("/sell", sellHandler)
 	http.HandleFunc("/step", stepHandler)
 
+	http.HandleFunc("/fetch-stock-data", fetchStockDataHandler)
+	http.HandleFunc("/get-portfolio", getPortfolioHandler)
+
 	fmt.Println("Server starting on port 3000...")
 	if err := http.ListenAndServe(":3000", nil); err != nil {
 		fmt.Println("Error starting server:", err)
