@@ -14,7 +14,7 @@ var stepIntervalSeconds int64 = 60 * 5
 var balance float32 = 0
 var portfolio map[string]int = make(map[string]int)
 
-var VERSION string = "0.0.1"
+var VERSION string = "0.0.3"
 
 func main() {
 	uc := updatechecker.New("CUQuants", "CUTE", "CUTE", "", 0, false)
