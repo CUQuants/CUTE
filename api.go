@@ -61,3 +61,33 @@ func stepHandler(w http.ResponseWriter, r *http.Request) {
 		"message": "Step loop executed.",
 	})
 }
+
+func getPortfolioHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]any{
+		"portfolio": portfolio,
+		"balance":   balance,
+	})
+}
+
+type StockDataRequest struct {
+	Symbol   string `json:"symbol"`
+	Interval string `json:"interval"`
+	N        int    `json:"n"`
+}
+
+func fetchStockDataHandler(w http.ResponseWriter, r *http.Request) {
+	var req StockDataRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+	data, err := fetchStockData(req.Symbol, req.Interval, req.N, currentTimeUnix)
+	if err != nil {
+		http.Error(w, "Something went wrong", http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}
