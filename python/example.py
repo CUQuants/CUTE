@@ -19,4 +19,5 @@ while True:
         pass
     cute.step() #done with transactions for this moment, move 5 minutes forward
     print(cute.get_portfolio().text)
+    print('---------------')
     time.sleep(4) #rate limited api
