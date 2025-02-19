@@ -1,0 +1,3 @@
+[submodule "waggle"]
+	path = waggle
+	url = https://github.com/CU-Robotics/waggle/

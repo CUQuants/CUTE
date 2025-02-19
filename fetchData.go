@@ -21,10 +21,10 @@ type MetaData struct {
 
 type StockValue struct {
 	Datetime string  `json:"datetime"`
-	Open     float32 `json:"open,string"`   // Convert from string to float64
-	High     float32 `json:"high,string"`   // Convert from string to float64
-	Low      float32 `json:"low,string"`    // Convert from string to float64
-	Close    float32 `json:"close,string"`  // Convert from string to float64
+	Open     float64 `json:"open,string"`   // Convert from string to float64
+	High     float64 `json:"high,string"`   // Convert from string to float64
+	Low      float64 `json:"low,string"`    // Convert from string to float64
+	Close    float64 `json:"close,string"`  // Convert from string to float64
 	Volume   int     `json:"volume,string"` // Convert from string to int
 }
 

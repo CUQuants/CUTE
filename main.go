@@ -11,7 +11,7 @@ var secrets *Secrets
 
 var currentTimeUnix int64
 var stepIntervalSeconds int64 = 60 * 5
-var balance float32 = 0
+var balance float64 = 0
 var portfolio map[string]int = make(map[string]int)
 
 var VERSION string = "0.0.3"
@@ -37,8 +37,8 @@ func main() {
 	http.HandleFunc("/fetch-stock-data", fetchStockDataHandler)
 	http.HandleFunc("/get-portfolio", getPortfolioHandler)
 
-	fmt.Println("Server starting on port 3000...")
-	if err := http.ListenAndServe(":3000", nil); err != nil {
+	fmt.Println("Server starting on port 5858...")
+	if err := http.ListenAndServe(":5858", nil); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 }

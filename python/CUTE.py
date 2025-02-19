@@ -1,7 +1,7 @@
 import requests
 
 class CUTE:
-    def __init__(self, url: str = 'http://localhost:3000', step_interval_seconds: int = 60*5, start_time_unix: int = 1673560800):
+    def __init__(self, url: str = 'http://localhost:5858', step_interval_seconds: int = 60*5, start_time_unix: int = 1673560800):
         assert step_interval_seconds >= 60
         self.version = '0.0.1'
         self.url = url
